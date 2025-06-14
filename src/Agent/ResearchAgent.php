@@ -5,7 +5,7 @@ namespace NeuronMind\Agent;
 use NeuronAI\Agent;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\OpenAI\OpenAI;
-use NeuronAI\Tools\Toolkits\Tavily\TavilySearchTool;
+use NeuronAI\Tools\Toolkits\Jina\JinaWebSearch;
 
 class ResearchAgent extends Agent
 {
@@ -20,9 +20,9 @@ class ResearchAgent extends Agent
     protected function tools(): array
     {
         return [
-            TavilySearchTool::make(
-                key: $_ENV['TAVILY_API_KEY']
-            ),
+            JinaWebSearch::make(
+                key: $_ENV['JINA_API_KEY']
+            )
         ];
     }
 }
