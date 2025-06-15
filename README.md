@@ -1,10 +1,10 @@
 # 🧠 NeuronMind
 
-**NeuronMind** is a fully working example that demonstrates how to build an **agentic AI assistant in PHP**, powered by [**Neuron-AI**](https://github.com/inspector-apm/neuron-ai), the open-source PHP framework for building LLM-based agents.
+**NeuronMind** is a fully working example that demonstrates how to build an **agentic AI assistant in PHP**, powered by [Neuron-AI](https://github.com/inspector-apm/neuron-ai), the open-source PHP framework for building LLM-based agents.
 
 > ⚠️ This is not a production-ready product, but an **exploratory project** to showcase how to structure intelligent agent workflows using tools, reasoning, and web search — entirely in PHP.
 
-The architecture is inspired by [Google's gemini-fullstack-langgraph-quickstart](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart), and reimagined using [**Neuron-AI**](https://github.com/inspector-apm/neuron-ai) and [Neuron-Graph](https://codeberg.org/sixty-nine/neuron-graph).
+The architecture is inspired by [Google's gemini-fullstack-langgraph-quickstart](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart), and reimagined using [Neuron-AI](https://github.com/inspector-apm/neuron-ai) and [Neuron-Graph](https://codeberg.org/sixty-nine/neuron-graph).
 
 ---
 
