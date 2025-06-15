@@ -29,8 +29,17 @@ class ChatCommand extends Command
         $message = $input->getOption('message');
 
         if ($message !== null) {
-            $response = $agent->chat(new UserMessage($message));
-            $output->writeln($response->getContent());
+            $response = $agent->stream(new UserMessage($message));
+
+            foreach ($response as $i => $chunk) {
+                if ($i === 0) {
+                    $output->write("NeuronMind> ");
+                }
+
+                $output->write($chunk, false);
+            }
+
+            $output->writeln("");
         } else {
             $output->writeln("<info>NeuronMind CLI - type 'exit' to quit</info>");
             $helper = new QuestionHelper();
@@ -43,8 +52,17 @@ class ChatCommand extends Command
                     break;
                 }
 
-                $response = $agent->chat(new UserMessage($userInput));
-                $output->writeln("NeuronMind> ".$response->getContent());
+                $response = $agent->stream(new UserMessage($userInput));
+
+                foreach ($response as $i => $chunk) {
+                    if ($i === 0) {
+                        $output->write("NeuronMind> ");
+                    }
+
+                    $output->write($chunk, false);
+                }
+
+                $output->writeln("");
             }
         }
 
