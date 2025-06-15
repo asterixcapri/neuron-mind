@@ -3,14 +3,13 @@
 namespace NeuronMind\Command;
 
 use NeuronAI\Chat\Messages\UserMessage;
-use NeuronMind\Agent\ResearchAgent;
-use NeuronMind\Observability\LogObserver;
+use NeuronMind\Agent\BaseAgent;
+use NeuronMind\Tool\SearchTool;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
@@ -24,16 +23,13 @@ class ChatCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $logger = new ConsoleLogger($output);
-        $observer = new LogObserver($logger, $output);
-
-        $researchAgent = ResearchAgent::make()
-            ->observe($observer);
+        $agent = BaseAgent::make()
+            ->addTool(new SearchTool());
 
         $message = $input->getOption('message');
 
         if ($message !== null) {
-            $response = $researchAgent->chat(new UserMessage($message));
+            $response = $agent->chat(new UserMessage($message));
             $output->writeln($response->getContent());
         } else {
             $output->writeln("<info>NeuronMind CLI - type 'exit' to quit</info>");
@@ -47,7 +43,7 @@ class ChatCommand extends Command
                     break;
                 }
 
-                $response = $researchAgent->chat(new UserMessage($userInput));
+                $response = $agent->chat(new UserMessage($userInput));
                 $output->writeln("NeuronMind> ".$response->getContent());
             }
         }

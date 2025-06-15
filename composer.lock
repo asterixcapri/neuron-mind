@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99982f973999736a33cf1eabffc4c981",
+    "content-hash": "21b1a24c0f40fec492251ed831780a86",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -704,6 +704,41 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "sixty-nine/neuron-graph",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://codeberg.org/sixty-nine/neuron-graph",
+                "reference": "23368be0d73daa15970d6926062e49d81007003b"
+            },
+            "require": {
+                "psr/log": "^1.0|^2.0|^3.0"
+            },
+            "require-dev": {
+                "monolog/monolog": "^3.9",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sixtynine\\NeuronGraph\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Barsotti",
+                    "email": "sixtynine.db@gmail.com"
+                }
+            ],
+            "description": "Finite State Machine for AI",
+            "time": "2025-05-15T20:43:25+00:00"
         },
         {
             "name": "symfony/console",
