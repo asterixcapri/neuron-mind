@@ -2,6 +2,7 @@
 
 namespace NeuronMind\Command;
 
+use Generator;
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronMind\Agent\BaseAgent;
 use NeuronMind\Tool\SearchTool;
@@ -30,16 +31,7 @@ class ChatCommand extends Command
 
         if ($message !== null) {
             $response = $agent->stream(new UserMessage($message));
-
-            foreach ($response as $i => $chunk) {
-                if ($i === 0) {
-                    $output->write("NeuronMind> ");
-                }
-
-                $output->write($chunk, false);
-            }
-
-            $output->writeln("");
+            $this->handleStreamResponse($output, $response);
         } else {
             $output->writeln("<info>NeuronMind CLI - type 'exit' to quit</info>");
             $helper = new QuestionHelper();
@@ -53,19 +45,23 @@ class ChatCommand extends Command
                 }
 
                 $response = $agent->stream(new UserMessage($userInput));
-
-                foreach ($response as $i => $chunk) {
-                    if ($i === 0) {
-                        $output->write("NeuronMind> ");
-                    }
-
-                    $output->write($chunk, false);
-                }
-
-                $output->writeln("");
+                $this->handleStreamResponse($output, $response);
             }
         }
 
         return Command::SUCCESS;
+    }
+
+    private function handleStreamResponse(OutputInterface $output, Generator $response): void
+    {
+        foreach ($response as $i => $chunk) {
+            if ($i === 0) {
+                $output->write("NeuronMind> ");
+            }
+
+            $output->write($chunk, false);
+        }
+
+        $output->writeln("");
     }
 }
