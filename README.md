@@ -167,4 +167,4 @@ MIT License
 
 ---
 
-Made by [@asterixcapri](https://github.com/asterixcapri)
+Made by [Alessandro Astarita](https://github.com/asterixcapri)
