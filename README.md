@@ -4,13 +4,13 @@
 
 > ⚠️ This is not a production-ready product, but an **exploratory project** to showcase how to structure intelligent agent workflows using tools, reasoning, and web search — entirely in PHP.
 
-The architecture is inspired by [Google's gemini-fullstack-langgraph-quickstart](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart), and reimagined using **Neuron-AI** and [Neuron-Graph](https://github.com/sixtynine-tech/neuron-graph).
+The architecture is inspired by [Google's gemini-fullstack-langgraph-quickstart](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart), and reimagined using [**Neuron-AI**](https://github.com/inspector-apm/neuron-ai) and [Neuron-Graph](https://codeberg.org/sixty-nine/neuron-graph).
 
 ---
 
 ## 🚀 Why Neuron-AI?
 
-`neuron-ai` brings agentic reasoning, tool calling, chat history, RAG, and integration with LLM providers (OpenAI, Ollama...) — all in native PHP.
+**Neuron-AI** brings agentic reasoning, tool calling, chat history, RAG, and integration with LLM providers (OpenAI, Ollama...) — all in native PHP.
 
 This project shows:
 
@@ -30,13 +30,14 @@ This project defines a **search tool** using a graph-based reasoning workflow. W
 ```
 User input
    ↓
-QueryWriterNode → generates refined queries
+QueryWriterNode     → generates refined search queries
    ↓
-SearcherNode → performs web search (via Jina)
+SearcherNode        → performs web search (via Jina)
    ↓
-ReflectionNode → evaluates if info is enough
+ReflectionNode      → evaluates if results are sufficient
+                      ↳ if not, suggests follow-up queries and loops back to SearcherNode
    ↓
-AnswerNode → generates final response
+AnswerNode          → generates final response
 ```
 
 All of this is wrapped in a `Tool` called `search`, registered inside the agent.
@@ -146,7 +147,7 @@ NeuronMind will rewrite the query, perform a web search, reflect, and generate a
 ## 🧱 Built With
 
 - [Neuron-AI](https://github.com/inspector-apm/neuron-ai) – Agent framework in PHP
-- [Neuron-Graph](https://github.com/sixtynine-tech/neuron-graph) – Workflow graph engine
+- [Neuron-Graph](https://codeberg.org/sixty-nine/neuron-graph) – Workflow graph engine
 - [Jina AI](https://jina.ai) – Web search API
 
 ---
@@ -166,4 +167,4 @@ MIT License
 
 ---
 
-Made with ❤️ by [@asterixcapri](https://github.com/asterixcapri)
+Made by [@asterixcapri](https://github.com/asterixcapri)
