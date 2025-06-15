@@ -9,12 +9,15 @@ class SimpleLogger
         echo $message;
 
         if (is_string($data)) {
-            echo $truncate ? substr(preg_replace('/\s+/', ' ', $data), 0, 80).'...' : $data;
+            $output = $truncate ? substr(preg_replace('/\s+/', ' ', $data), 0, 80).'...' : $data;
+            echo trim($output);
         }
         elseif (is_array($data)) {
-            echo json_encode(array_map(function($result) use ($truncate) {
+            $output = json_encode(array_map(function($result) use ($truncate) {
                 return $truncate ? substr(preg_replace('/\s+/', ' ', $result), 0, 50).'...' : $result;
             }, $data));
+
+            echo trim($output);
         }
 
         echo "\n";
