@@ -19,7 +19,7 @@ class ReflectionNode extends Node
             throw new \RuntimeException('Expected search_results to be an array');
         }
 
-        SimpleLogger::info('ReflectionNode - User query: '.$userQuery);
+        SimpleLogger::info('ReflectionNode - User query: '.$userQuery, truncate: false);
         SimpleLogger::info('ReflectionNode - Search results: ', $searchResults);
 
         $agent = BaseAgent::make();
@@ -53,7 +53,7 @@ class ReflectionNode extends Node
             throw new \RuntimeException('Failed to parse reflection response.');
         }
 
-        SimpleLogger::info('ReflectionNode - Reflection response: ', $content);
+        SimpleLogger::info('ReflectionNode - Reflection response: ', $content, truncate: false);
 
         $state->set('is_sufficient', $json['is_sufficient']);
 

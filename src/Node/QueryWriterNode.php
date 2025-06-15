@@ -32,7 +32,7 @@ class QueryWriterNode extends Node
 
         $content = preg_replace('/```json\n|```/', '', $response->getContent());
 
-        SimpleLogger::info('QueryWriterNode - Query writer response: ', $content);
+        SimpleLogger::info('QueryWriterNode - Query writer response: ', $content, truncate: false);
 
         $json = json_decode($content, true);
 

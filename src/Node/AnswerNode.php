@@ -20,7 +20,7 @@ class AnswerNode extends Node
             throw new \RuntimeException('Expected search_results to be an array');
         }
 
-        SimpleLogger::info('AnswerNode - Original question: '.$originalQuestion);
+        SimpleLogger::info('AnswerNode - Original question: '.$originalQuestion, truncate: false);
         SimpleLogger::info('AnswerNode - Search results: ', $searchResults);
 
         $resultsText = implode("\n---\n", $searchResults);
