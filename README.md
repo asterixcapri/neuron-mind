@@ -161,10 +161,10 @@ Implemented from scratch in **pure PHP** using Neuron-AI tools.
 
 ---
 
-## 📄 License
+## ⚖️ License
 
-MIT License
+Distributed under the [MIT license](LICENSE).
 
 ---
 
-Made by [Alessandro Astarita](https://github.com/asterixcapri)
+Developed by [Alessandro Astarita](https://github.com/asterixcapri)
