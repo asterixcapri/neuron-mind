@@ -8,13 +8,15 @@ use NeuronMind\Logger\SimpleLogger;
 use Sixtynine\NeuronGraph\Graph\GraphState;
 use Sixtynine\NeuronGraph\Nodes\Node;
 use NeuronMind\Node\SearcherNode;
+use NeuronMind\Service\JsonOutputParser;
 use RuntimeException;
 
 class QueryWriterNode extends Node
 {
     public function run(GraphState|null $state, mixed $topic): SearcherNode
     {
-        SimpleLogger::info('QueryWriterNode - Starting query writer with topic: ', $topic);
+        SimpleLogger::info('QueryWriterNode - Starting...');
+        SimpleLogger::info('QueryWriterNode - Topic: ', $topic);
 
         $numberQueries = 3;
         $currentDate = date('Y-m-d');
@@ -57,15 +59,13 @@ class QueryWriterNode extends Node
             );
 
         $response = $agent->chat(new UserMessage("Topic: {$topic}"));
-
-        $content = preg_replace('/```json\n|```/', '', $response->getContent());
-        $data = json_decode($content);
+        $data = (new JsonOutputParser())->parse($response->getContent());
 
         if (is_null($data) || !isset($data->queries)) {
             throw new RuntimeException('Failed to decode query generation output.');
         }
 
-        SimpleLogger::info('QueryWriterNode - Query writer response: ', $content, truncate: false);
+        SimpleLogger::info('QueryWriterNode - Response: ', $data, truncate: false);
 
         $state->set('topic', $topic);
         $state->set('rationale', $data->rationale ?? '');

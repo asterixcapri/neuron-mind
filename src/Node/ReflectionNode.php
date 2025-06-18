@@ -5,6 +5,7 @@ namespace NeuronMind\Node;
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronMind\Agent\BaseAgent;
 use NeuronMind\Logger\SimpleLogger;
+use NeuronMind\Service\JsonOutputParser;
 use RuntimeException;
 use Sixtynine\NeuronGraph\Graph\GraphState;
 use Sixtynine\NeuronGraph\Nodes\Node;
@@ -13,6 +14,8 @@ class ReflectionNode extends Node
 {
     public function run(GraphState|null $state, mixed $input): AnswerNode|SearcherNode
     {
+        SimpleLogger::info('ReflectionNode - Starting...');
+
         $topic = $state->get('topic');
         $searchResults = $state->get('searchResults');
 
@@ -20,8 +23,8 @@ class ReflectionNode extends Node
             throw new RuntimeException('Expected searchResults to be an array');
         }
 
-        SimpleLogger::info('ReflectionNode - Topic: '.$topic, truncate: false);
-        SimpleLogger::info('ReflectionNode - Search results ('.count($searchResults).'): ', $searchResults);
+        SimpleLogger::info('ReflectionNode - Topic: ', $topic, truncate: false);
+        SimpleLogger::info('ReflectionNode - Results: ', count($searchResults));
 
         $agent = BaseAgent::make()
             ->withInstructions(
@@ -58,14 +61,13 @@ class ReflectionNode extends Node
         $summaries = implode("\n---\n", $searchResults);
         $response = $agent->chat(new UserMessage("Summaries: {$summaries}"));
 
-        $content = preg_replace('/```json\n|```/', '', $response->getContent());
-        $data = json_decode($content);
+        $data = (new JsonOutputParser())->parse($response->getContent());
 
         if (is_null($data) || !isset($data->isSufficient)) {
             throw new RuntimeException('Failed to parse reflection response.');
         }
 
-        SimpleLogger::info('ReflectionNode - Reflection response: ', $content, truncate: false);
+        SimpleLogger::info('ReflectionNode - Response: ', $data, truncate: false);
 
         $loopCount = $state->has('loopCount') ? $state->get('loopCount') + 1 : 1;
         $state->set('loopCount', $loopCount);

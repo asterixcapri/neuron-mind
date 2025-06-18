@@ -14,7 +14,7 @@ class SearcherNode extends Node
 {
     public function run(GraphState|null $state, mixed $input): ReflectionNode
     {
-        SimpleLogger::info('SearcherNode - Starting search');
+        SimpleLogger::info('SearcherNode - Starting...');
 
         $queries = $state->get('queries');
 
@@ -48,7 +48,7 @@ class SearcherNode extends Node
             $response = $agent->chat(new UserMessage("Topic: {$query}"));
             $content = $response->getContent();
 
-            SimpleLogger::info('SearcherNode - Search result: ', $content);
+            SimpleLogger::info('SearcherNode - Result: ', $content);
 
             $searchResults[] = $content;
         }

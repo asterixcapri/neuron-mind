@@ -14,6 +14,8 @@ class AnswerNode extends Node
 {
     public function run(GraphState|null $state, mixed $input): EndNode
     {
+        SimpleLogger::info('AnswerNode - Starting...');
+
         $topic = $state->get('topic');
         $searchResults = $state->get('searchResults');
 
@@ -21,8 +23,7 @@ class AnswerNode extends Node
             throw new RuntimeException('Expected search_results to be an array');
         }
 
-        SimpleLogger::info('AnswerNode - Topic: '.$topic, truncate: false);
-        SimpleLogger::info('AnswerNode - Search results: ', $searchResults);
+        SimpleLogger::info('AnswerNode - Topic: ', $topic, truncate: false);
 
         $currentDate = date('Y-m-d');
 
@@ -37,7 +38,7 @@ class AnswerNode extends Node
                     - You have access to all the information gathered from the previous steps.
                     - You have access to the user's question.
                     - Generate a high-quality answer to the user's question based on the provided summaries and the user's question.
-                    - you MUST include all the citations from the summaries in the answer correctly.
+                    - you MUST include all the links from the summaries in the answer correctly.
                 INSTRUCTIONS
             );
 
@@ -52,7 +53,7 @@ class AnswerNode extends Node
 
         $content = $response->getContent();
 
-        SimpleLogger::info('AnswerNode - Answer: ', $content);
+        SimpleLogger::info('AnswerNode - Response: ', $content);
 
         return new EndNode($content);
     }
