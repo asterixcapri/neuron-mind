@@ -9,17 +9,20 @@ class SimpleLogger
         echo $message;
 
         if (is_string($data)) {
-            $output = $truncate ? substr(preg_replace('/\s+/', ' ', $data), 0, 80).'...' : $data;
-            echo trim($output);
+            echo $truncate ? self::truncate($data) : $data;
         }
         elseif (is_array($data)) {
-            $output = json_encode(array_map(function($result) use ($truncate) {
-                return $truncate ? substr(preg_replace('/\s+/', ' ', $result), 0, 50).'...' : $result;
-            }, $data));
-
-            echo trim($output);
+            echo json_encode(array_map(fn($item) => $truncate ? self::truncate($item) : $item, $data));
+        }
+        elseif (!is_null($data)) {
+            echo json_encode($data);
         }
 
         echo "\n";
+    }
+
+    private static function truncate(string $s): string
+    {
+        return trim(substr(preg_replace('/\s+/', ' ', $s), 0, 160)).'...';
     }
 }
