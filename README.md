@@ -68,6 +68,8 @@ All of this is wrapped in a `Tool` called `search`, registered inside the agent.
 ```bash
 git clone https://github.com/asterixcapri/neuron-mind.git
 cd neuron-mind
+docker compose up -d
+./docker/shell.sh
 composer install
 cp .env.example .env
 # Add your OPENAI_API_KEY and JINA_API_KEY to .env
