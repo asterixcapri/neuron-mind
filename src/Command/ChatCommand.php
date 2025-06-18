@@ -25,6 +25,13 @@ class ChatCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $agent = BaseAgent::make()
+            ->withInstructions(
+                <<<INSTRUCTIONS
+                    You are a helpful AI assistant.
+                    Use the `search` tool to retrieve information.
+                    Respond directly to casual or small talk messages.
+                INSTRUCTIONS
+            )
             ->addTool(new SearchTool());
 
         $message = $input->getOption('message');
@@ -40,7 +47,10 @@ class ChatCommand extends Command
                 $question = new Question('You> ');
                 $userInput = $helper->ask($input, $output, $question);
 
-                if ($userInput === 'exit') {
+                if ($userInput === null) {
+                    continue;
+                }
+                elseif ($userInput === 'exit') {
                     break;
                 }
 
@@ -59,7 +69,7 @@ class ChatCommand extends Command
                 $output->write("NeuronMind> ");
             }
 
-            $output->write($chunk, false);
+            $output->write($chunk);
         }
 
         $output->writeln("");

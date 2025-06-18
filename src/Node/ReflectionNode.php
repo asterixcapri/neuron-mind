@@ -5,6 +5,7 @@ namespace NeuronMind\Node;
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronMind\Agent\BaseAgent;
 use NeuronMind\Logger\SimpleLogger;
+use RuntimeException;
 use Sixtynine\NeuronGraph\Graph\GraphState;
 use Sixtynine\NeuronGraph\Nodes\Node;
 
@@ -12,62 +13,74 @@ class ReflectionNode extends Node
 {
     public function run(GraphState|null $state, mixed $input): AnswerNode|SearcherNode
     {
-        $searchResults = $state->get('search_results');
-        $userQuery = $state->get('user_query');
+        $topic = $state->get('topic');
+        $searchResults = $state->get('searchResults');
 
         if (!is_array($searchResults)) {
-            throw new \RuntimeException('Expected search_results to be an array');
+            throw new RuntimeException('Expected searchResults to be an array');
         }
 
-        SimpleLogger::info('ReflectionNode - User query: '.$userQuery, truncate: false);
-        SimpleLogger::info('ReflectionNode - Search results: ', $searchResults);
+        SimpleLogger::info('ReflectionNode - Topic: '.$topic, truncate: false);
+        SimpleLogger::info('ReflectionNode - Search results ('.count($searchResults).'): ', $searchResults);
 
-        $agent = BaseAgent::make();
+        $agent = BaseAgent::make()
+            ->withInstructions(
+                <<<INSTRUCTIONS
+                    You are an expert research assistant analyzing summaries about "{$topic}".
 
-        $resultsText = implode("\n---\n", $searchResults);
+                    Instructions:
+                    - Carefully review the summaries to determine if they provide a clear and complete answer to the user's question.
+                    - If the information is sufficient, you should confidently answer "isSufficient": true and avoid suggesting unnecessary follow-up.
+                    - If there are meaningful knowledge gaps — such as missing explanations, examples, or key technical details — describe them and suggest one or more useful follow-up queries.
 
-        $response = $agent->chat(new UserMessage(
-            <<<PROMPT
-                You are a critical research assistant.
+                    Requirements:
+                    - Ensure the follow-up query is self-contained and includes necessary context for search.
 
-                You will receive a user's original question and a list of search results retrieved from the web.
+                    Output Format:
+                    - Format your response as a JSON object with these exact keys:
+                    - "isSufficient": true or false
+                    - "knowledgeGap": Describe what information is missing or needs clarification
+                    - "followUpQueries": Write a specific question to address this gap
 
-                Evaluate whether the search results are sufficient to answer the user's question.
-                If yes, reply with this exact JSON: { "is_sufficient": true }
+                    Example:
+                    ```json
+                    {
+                        "isSufficient": true, // or false
+                        "knowledgeGap": "The summary lacks information about performance metrics and benchmarks", // "" if isSufficient is true
+                        "followUpQueries": ["What are typical performance benchmarks and metrics used to evaluate [specific technology]?"] // [] if isSufficient is true
+                    }
 
-                If not, reply with this JSON: { "is_sufficient": false, "follow_up_queries": [ "query1", "query2", "query3" ] }
+                    Reflect carefully on the Summaries to identify knowledge gaps and produce a follow-up query.
+                    Then, produce your output following this JSON format.
+                INSTRUCTIONS
+            );
 
-                User question:
-                {$userQuery}
-
-                Search results:
-                ---
-                {$resultsText}
-            PROMPT
-        ));
+        $summaries = implode("\n---\n", $searchResults);
+        $response = $agent->chat(new UserMessage("Summaries: {$summaries}"));
 
         $content = preg_replace('/```json\n|```/', '', $response->getContent());
-        $json = json_decode($content, true);
+        $data = json_decode($content);
 
-        if (!is_array($json) || !isset($json['is_sufficient'])) {
-            throw new \RuntimeException('Failed to parse reflection response.');
+        if (is_null($data) || !isset($data->isSufficient)) {
+            throw new RuntimeException('Failed to parse reflection response.');
         }
 
         SimpleLogger::info('ReflectionNode - Reflection response: ', $content, truncate: false);
 
-        $state->set('is_sufficient', $json['is_sufficient']);
+        $loopCount = $state->has('loopCount') ? $state->get('loopCount') + 1 : 1;
+        $state->set('loopCount', $loopCount);
 
-        if ($state->has('loop_count')) {
-            $state->set('loop_count', $state->get('loop_count') + 1);
-        } else {
-            $state->set('loop_count', 0);
+        if ($loopCount > 3) {
+            SimpleLogger::info('ReflectionNode - Loop count exceeded 3, returning to AnswerNode anyway');
+            return new AnswerNode();
         }
 
-        if (!$json['is_sufficient']) {
-            $state->set('queries', $json['follow_up_queries'] ?? []);
+        if (!$data->isSufficient) {
+            $state->set('queries', $data->followUpQueries ?? []);
             return new SearcherNode();
         }
-
-        return new AnswerNode();
+        else {
+            return new AnswerNode();
+        }
     }
 }

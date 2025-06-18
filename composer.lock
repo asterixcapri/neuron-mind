@@ -332,21 +332,76 @@
             "time": "2025-03-27T12:30:47+00:00"
         },
         {
-            "name": "inspector-apm/neuron-ai",
-            "version": "1.12.14",
+            "name": "inspector-apm/inspector-php",
+            "version": "3.15.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "f7c004a1d745c8d5ac3684184fb88f2f0abbccda"
+                "url": "https://github.com/inspector-apm/inspector-php.git",
+                "reference": "30d9c8ab5a4ac3a313722e4a9676461de8ec1963"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/f7c004a1d745c8d5ac3684184fb88f2f0abbccda",
-                "reference": "f7c004a1d745c8d5ac3684184fb88f2f0abbccda",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/30d9c8ab5a4ac3a313722e4a9676461de8ec1963",
+                "reference": "30d9c8ab5a4ac3a313722e4a9676461de8ec1963",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "inspector-apm/neuron-ai": "^1.2.22",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.0",
+                "rector/rector": "^2.0",
+                "tomasvotruba/type-coverage": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Inspector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valerio Barbera",
+                    "email": "valerio@inspector.dev"
+                }
+            ],
+            "description": "Inspector for PHP applications.",
+            "keywords": [
+                "inspector",
+                "monitoring",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/inspector-apm/inspector-php/issues",
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.15.6"
+            },
+            "time": "2025-06-18T09:58:26+00:00"
+        },
+        {
+            "name": "inspector-apm/neuron-ai",
+            "version": "1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inspector-apm/neuron-ai.git",
+                "reference": "b201939f2ba747437ba937b070c410927208af51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/b201939f2ba747437ba937b070c410927208af51",
+                "reference": "b201939f2ba747437ba937b070c410927208af51",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.0",
+                "inspector-apm/inspector-php": "^3.15.5",
                 "php": "^8.1",
                 "psr/http-message": "^1.0|^2.0",
                 "psr/log": "^1.0|^2.0|^3.0"
@@ -356,7 +411,6 @@
                 "elasticsearch/elasticsearch": "^8.0",
                 "ext-pdo": "*",
                 "friendsofphp/php-cs-fixer": "^3.75",
-                "inspector-apm/inspector-php": "dev-master",
                 "monolog/monolog": "^3.9",
                 "php-http/curl-client": "^2.3",
                 "phpstan/phpstan": "^2.1",
@@ -370,7 +424,6 @@
             "suggest": {
                 "doctrine/orm": "^2.20",
                 "elasticsearch/elasticsearch": "^7.0|^8.0",
-                "inspector-apm/inspector-php": "^3.9",
                 "php-http/curl-client": "^2.3",
                 "symfony/process": "^4.0|^5.0|^6.0|^7.0",
                 "typesense/typesense-php": "^5.0"
@@ -382,9 +435,6 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
             "authors": [
                 {
                     "name": "Valerio Barbera",
@@ -394,9 +444,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.12.14"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.13.0"
             },
-            "time": "2025-06-13T11:18:20+00:00"
+            "time": "2025-06-18T09:56:33+00:00"
         },
         {
             "name": "psr/container",

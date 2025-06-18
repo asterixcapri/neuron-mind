@@ -18,20 +18,20 @@ class SearchTool extends Tool
     {
         parent::__construct(
             'search',
-            'Search information for a given query'
+            'Search information for a given topic'
         );
 
         $this->addProperty(
             new ToolProperty(
-                name: 'query',
+                name: 'topic',
                 type: PropertyType::STRING,
-                description: 'The query',
+                description: 'A topic or a question',
                 required: true
             )
         )->setCallable($this);
     }
 
-    public function __invoke(string $query): string
+    public function __invoke(string $topic): string
     {
         $graph = new Graph([
             QueryWriterNode::class,
@@ -40,7 +40,7 @@ class SearchTool extends Tool
             AnswerNode::class,
         ]);
 
-        $result = $graph->run(new QueryWriterNode(), new GraphState(), $query);
+        $result = $graph->run(new QueryWriterNode(), new GraphState(), $topic);
         return $result->data;
     }
 }
