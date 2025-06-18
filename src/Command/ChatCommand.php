@@ -4,8 +4,7 @@ namespace NeuronMind\Command;
 
 use Generator;
 use NeuronAI\Chat\Messages\UserMessage;
-use NeuronMind\Agent\BaseAgent;
-use NeuronMind\Tool\SearchTool;
+use NeuronMind\Agent\ChatAgent;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -24,15 +23,7 @@ class ChatCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $agent = BaseAgent::make()
-            ->withInstructions(
-                <<<INSTRUCTIONS
-                    You are a helpful AI assistant.
-                    Use the `search` tool to retrieve information.
-                    Respond directly to casual or small talk messages.
-                INSTRUCTIONS
-            )
-            ->addTool(new SearchTool());
+        $agent = ChatAgent::make();
 
         $message = $input->getOption('message');
 
