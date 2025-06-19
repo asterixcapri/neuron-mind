@@ -71,7 +71,6 @@ cd neuron-mind
 docker compose up -d
 ./docker/shell.sh
 composer install
-cp .env.example .env
 # Add your OPENAI_API_KEY and JINA_API_KEY to .env
 ```
 
