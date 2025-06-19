@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99982f973999736a33cf1eabffc4c981",
+    "content-hash": "30929f4159441ebf46449a4bc4b4f0e6",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -387,16 +387,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.13.0",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "b201939f2ba747437ba937b070c410927208af51"
+                "reference": "4f0017c08063f21f14167c5f367d74155d921b0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/b201939f2ba747437ba937b070c410927208af51",
-                "reference": "b201939f2ba747437ba937b070c410927208af51",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/4f0017c08063f21f14167c5f367d74155d921b0d",
+                "reference": "4f0017c08063f21f14167c5f367d74155d921b0d",
                 "shasum": ""
             },
             "require": {
@@ -444,9 +444,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.13.0"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.13.1"
             },
-            "time": "2025-06-18T09:56:33+00:00"
+            "time": "2025-06-18T21:01:50+00:00"
         },
         {
             "name": "psr/container",
