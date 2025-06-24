@@ -21,15 +21,18 @@ class SearchTool extends Tool
             'search',
             'Search information for a given question'
         );
+    }
 
-        $this->addProperty(
+    protected function properties(): array
+    {
+        return [
             new ToolProperty(
                 name: 'question',
                 type: PropertyType::STRING,
                 description: 'The full question to search for',
                 required: true
             )
-        )->setCallable($this);
+        ];
     }
 
     public function __invoke(string $question): string
