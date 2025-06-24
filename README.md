@@ -21,26 +21,30 @@ This project shows:
 
 ---
 
-## 🧩 What this example implements
+## 🧩 Workflow
 
-This project defines a **search tool** using a graph-based reasoning workflow. When a user asks a question, the agent decides whether to answer directly or invoke the tool.
+This project defines a **search tool** using a graph-based reasoning workflow.
 
-### Tool Workflow
+```mermaid
+flowchart TB
+    UI(("User Input"))
+    QW["QueryWriter"]
+    S["Searcher"]
+    R{"Reflection"}
+    A["Answer"]
+    FA(("Final Answer"))
 
+    UI --> QW
+    QW -- "Refined queries" --> S
+    S -- "Search results" --> R
+    R -- "Results are not sufficient" --> S
+    R -- "Results are sufficient" --> A
+    A --> FA
 ```
-User input
-   ↓
-QueryWriterNode     → generates refined search queries
-   ↓
-SearcherNode        → performs web search (via Jina)
-   ↓
-ReflectionNode      → evaluates if results are sufficient
-                      ↳ if not, suggests follow-up queries and loops back to SearcherNode
-   ↓
-AnswerNode          → generates final response
-```
 
-All of this is wrapped in a `Tool` called `search`, registered inside the agent.
+
+
+When a user asks a question, the system first hands it to the **QueryWriter**, which re-expresses the request as a handful of sharply focused web-search queries. Those queries go to the **Searcher**, which calls Jina’s API and retrieves a set of relevant results—titles, snippets, and links. Next, the **Reflection** reviews this evidence to decide whether it fully answers the user’s question. If gaps remain, it refines or adds queries and loops back through the **Searcher** until the material feels complete. Only then does the **Answer** weave the vetted information into a clear, well-sourced reply that is finally delivered to the user.
 
 ---
 
