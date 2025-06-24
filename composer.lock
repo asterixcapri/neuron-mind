@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30929f4159441ebf46449a4bc4b4f0e6",
+    "content-hash": "0b0a1ab789a26022ea353cd0f865c3db",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -387,16 +387,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.13.1",
+            "version": "1.14.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "4f0017c08063f21f14167c5f367d74155d921b0d"
+                "reference": "70a07976e1ad516fe2bc9d174c36520a67172eec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/4f0017c08063f21f14167c5f367d74155d921b0d",
-                "reference": "4f0017c08063f21f14167c5f367d74155d921b0d",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/70a07976e1ad516fe2bc9d174c36520a67172eec",
+                "reference": "70a07976e1ad516fe2bc9d174c36520a67172eec",
                 "shasum": ""
             },
             "require": {
@@ -407,6 +407,7 @@
                 "psr/log": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
+                "aws/aws-sdk-php": "^3.209",
                 "doctrine/orm": "^2.20",
                 "elasticsearch/elasticsearch": "^8.0",
                 "ext-pdo": "*",
@@ -422,6 +423,7 @@
                 "typesense/typesense-php": "^5.0"
             },
             "suggest": {
+                "aws/aws-sdk-php": "^3.209",
                 "doctrine/orm": "^2.20",
                 "elasticsearch/elasticsearch": "^7.0|^8.0",
                 "php-http/curl-client": "^2.3",
@@ -444,9 +446,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.13.1"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.9"
             },
-            "time": "2025-06-18T21:01:50+00:00"
+            "time": "2025-06-23T18:31:08+00:00"
         },
         {
             "name": "psr/container",
