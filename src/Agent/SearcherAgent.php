@@ -5,7 +5,7 @@ namespace NeuronMind\Agent;
 use NeuronAI\Agent;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\OpenAI\OpenAI;
-use NeuronAI\Tools\Toolkits\Jina\JinaWebSearch;
+use NeuronAI\Tools\Toolkits\Jina\JinaToolkit;
 
 class SearcherAgent extends Agent
 {
@@ -41,7 +41,7 @@ class SearcherAgent extends Agent
     protected function tools(): array
     {
         return [
-            JinaWebSearch::make(key: $_ENV['JINA_API_KEY'])
+            JinaToolkit::make(key: $_ENV['JINA_API_KEY'])
         ];
     }
 }
