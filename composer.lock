@@ -333,16 +333,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.15.6",
+            "version": "3.15.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "30d9c8ab5a4ac3a313722e4a9676461de8ec1963"
+                "reference": "9f563eeded9ef5686c4a2e76ff5ba6cd50df98a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/30d9c8ab5a4ac3a313722e4a9676461de8ec1963",
-                "reference": "30d9c8ab5a4ac3a313722e4a9676461de8ec1963",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/9f563eeded9ef5686c4a2e76ff5ba6cd50df98a2",
+                "reference": "9f563eeded9ef5686c4a2e76ff5ba6cd50df98a2",
                 "shasum": ""
             },
             "require": {
@@ -381,22 +381,22 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.15.6"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.15.8"
             },
-            "time": "2025-06-18T09:58:26+00:00"
+            "time": "2025-06-19T12:13:16+00:00"
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.14.9",
+            "version": "1.14.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "70a07976e1ad516fe2bc9d174c36520a67172eec"
+                "reference": "2b5a5bd0266511fef62b39b45a7718cea44584ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/70a07976e1ad516fe2bc9d174c36520a67172eec",
-                "reference": "70a07976e1ad516fe2bc9d174c36520a67172eec",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/2b5a5bd0266511fef62b39b45a7718cea44584ce",
+                "reference": "2b5a5bd0266511fef62b39b45a7718cea44584ce",
                 "shasum": ""
             },
             "require": {
@@ -446,9 +446,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.9"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.15"
             },
-            "time": "2025-06-23T18:31:08+00:00"
+            "time": "2025-06-25T15:47:43+00:00"
         },
         {
             "name": "psr/container",
