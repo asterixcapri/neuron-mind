@@ -12,9 +12,9 @@
     ],
     "require": {
         "php": "^8.4",
-        "inspector-apm/neuron-ai": "^1.14",
         "symfony/dotenv": "^7.3",
-        "symfony/console": "^7.3"
+        "symfony/console": "^7.3",
+        "inspector-apm/neuron-ai": "^1.16"
     },
     "autoload": {
         "psr-4": {
