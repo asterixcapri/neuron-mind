@@ -7,7 +7,6 @@ use NeuronAI\Workflow\Node;
 use NeuronAI\Workflow\WorkflowState;
 use NeuronMind\Agent\Search\ReflectionAgent;
 use NeuronMind\Logger\SimpleLogger;
-use NeuronMind\Service\JsonExtractor;
 use RuntimeException;
 
 class ReflectionNode extends Node
@@ -34,8 +33,7 @@ class ReflectionNode extends Node
             implode("\n---\n", $searchResults)
         ));
 
-        $response = $agent->chat($userMessage);
-        $data = (new JsonExtractor())->getData($response->getContent());
+        $data = $agent->structured($userMessage);
 
         if (is_null($data) || !isset($data->isSufficient)) {
             throw new RuntimeException('Failed to parse reflection response.');
