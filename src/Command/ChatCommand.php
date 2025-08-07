@@ -3,8 +3,10 @@
 namespace NeuronMind\Command;
 
 use Generator;
+use NeuronAI\Chat\Messages\Message;
 use NeuronAI\Chat\Messages\UserMessage;
-use NeuronMind\Agent\ChatAgent;
+use NeuronMind\Agent\OrchestratorAgent;
+use NeuronMind\Service\Orchestrator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -23,12 +25,12 @@ class ChatCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $agent = ChatAgent::make();
+        $orchestrator = new Orchestrator();
 
         $message = $input->getOption('message');
 
         if ($message !== null) {
-            $response = $agent->stream(new UserMessage($message));
+            $response = $orchestrator->orchestrate($message);
             $this->handleStreamResponse($output, $response);
         } else {
             $output->writeln("<info>NeuronMind CLI - type 'exit' to quit</info>");
@@ -45,7 +47,7 @@ class ChatCommand extends Command
                     break;
                 }
 
-                $response = $agent->stream(new UserMessage($userInput));
+                $response = $orchestrator->orchestrate($userInput);
                 $this->handleStreamResponse($output, $response);
             }
         }
