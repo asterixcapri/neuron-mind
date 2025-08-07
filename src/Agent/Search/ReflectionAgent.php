@@ -1,6 +1,6 @@
 <?php
 
-namespace NeuronMind\Agent;
+namespace NeuronMind\Agent\Search;
 
 use NeuronAI\Agent;
 use NeuronAI\Providers\AIProviderInterface;

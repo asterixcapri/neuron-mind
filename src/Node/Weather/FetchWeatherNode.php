@@ -1,6 +1,6 @@
 <?php
 
-namespace NeuronMind\Node;
+namespace NeuronMind\Node\Weather;
 
 use NeuronAI\Workflow\Node;
 use NeuronAI\Workflow\WorkflowState;

@@ -1,11 +1,11 @@
 <?php
 
-namespace NeuronMind\Node;
+namespace NeuronMind\Node\Search;
 
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronAI\Workflow\Node;
 use NeuronAI\Workflow\WorkflowState;
-use NeuronMind\Agent\SearcherAgent;
+use NeuronMind\Agent\Search\SearcherAgent;
 use NeuronMind\Logger\SimpleLogger;
 use RuntimeException;
 

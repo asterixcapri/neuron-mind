@@ -4,9 +4,9 @@ namespace NeuronMind\Workflow;
 
 use NeuronAI\Workflow\Edge;
 use NeuronAI\Workflow\Workflow;
-use NeuronMind\Node\CheckCityNode;
-use NeuronMind\Node\CheckDateNode;
-use NeuronMind\Node\FetchWeatherNode;
+use NeuronMind\Node\Weather\CheckCityNode;
+use NeuronMind\Node\Weather\CheckDateNode;
+use NeuronMind\Node\Weather\FetchWeatherNode;
 
 class WeatherWorkflow extends Workflow
 {

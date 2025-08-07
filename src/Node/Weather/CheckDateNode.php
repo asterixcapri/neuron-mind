@@ -1,19 +1,19 @@
 <?php
 
-namespace NeuronMind\Node;
+namespace NeuronMind\Node\Weather;
 
 use NeuronAI\Workflow\Node;
 use NeuronAI\Workflow\WorkflowState;
 
-class CheckCityNode extends Node
+class CheckDateNode extends Node
 {
     public function run(WorkflowState $state): WorkflowState
     {
-        if (!$state->has('city')) {
+        if (!$state->has('date')) {
             $this->interrupt([
                 'type' => 'fill_slot',
-                'slot_name' => 'city',
-                'question' => 'Per quale città vuoi conoscere il meteo?',
+                'slot_name' => 'date',
+                'question' => 'Per quale giorno vuoi le previsioni del tempo?',
             ]);
         }
 

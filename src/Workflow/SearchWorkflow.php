@@ -5,10 +5,10 @@ namespace NeuronMind\Workflow;
 use NeuronAI\Workflow\Edge;
 use NeuronAI\Workflow\Workflow;
 use NeuronAI\Workflow\WorkflowState;
-use NeuronMind\Node\AnswerNode;
-use NeuronMind\Node\QueryWriterNode;
-use NeuronMind\Node\ReflectionNode;
-use NeuronMind\Node\SearcherNode;
+use NeuronMind\Node\Search\AnswerNode;
+use NeuronMind\Node\Search\QueryWriterNode;
+use NeuronMind\Node\Search\ReflectionNode;
+use NeuronMind\Node\Search\SearcherNode;
 
 class SearchWorkflow extends Workflow
 {
