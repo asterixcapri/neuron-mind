@@ -3,6 +3,8 @@
 namespace NeuronMind\Agent;
 
 use NeuronAI\Agent;
+use NeuronAI\Chat\History\ChatHistoryInterface;
+use NeuronAI\Chat\History\InMemoryChatHistory;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\OpenAI\OpenAI;
 
@@ -31,5 +33,19 @@ class ChatAgent extends Agent
                 conversation and respond accordingly (e.g., with "You're welcome!", "Is there anything else I
                 can help with?", etc.).
         INSTRUCTIONS;
+    }
+
+    public function getContextWindow(int $numberOfMessages): ChatHistoryInterface
+    {
+        $messages = $this->resolveChatHistory()->getMessages();
+        $contextWindow = array_slice($messages, -$numberOfMessages);
+
+        $chatHistory = new InMemoryChatHistory();
+
+        foreach ($contextWindow as $message) {
+            $chatHistory->addMessage($message);
+        }
+
+        return $chatHistory;
     }
 }

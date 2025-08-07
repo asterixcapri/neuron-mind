@@ -83,7 +83,7 @@ class Orchestrator
         echo "DEBUG slot to fill: {$slotToFill}\n";
 
         $slotFillingAgent = new SlotFillingAgent($question);
-        $slotFillingAgent->withChatHistory($this->getChatContextWindow(6));
+        $slotFillingAgent->withChatHistory($this->chatAgent->getContextWindow(6));
         $extractedData = $slotFillingAgent->extract($userInput);
         
         echo "DEBUG extractedData: "; print_r($extractedData); echo "\n";
@@ -98,7 +98,7 @@ class Orchestrator
     private function handleNewInteraction(string $userInput): ?array
     {
         $intentAgent = new IntentAgent($this->workflowRegistry);
-        $intentAgent->withChatHistory($this->getChatContextWindow(6));
+        $intentAgent->withChatHistory($this->chatAgent->getContextWindow(6));
         $intent = $intentAgent->determineIntent($userInput);
 
         echo "DEBUG intent: {$intent}\n";
@@ -111,7 +111,7 @@ class Orchestrator
         $this->chatAgent->fillChatHistory(new UserMessage($userInput));
 
         $summarizer = new ContextSummarizerAgent();
-        $summarizer->withChatHistory($this->getChatContextWindow(6));
+        $summarizer->withChatHistory($this->chatAgent->getContextWindow(6));
         $contextSummary = $summarizer->summarize();
         
         echo "DEBUG contextSummary: "; print_r($contextSummary); echo "\n";
@@ -122,7 +122,7 @@ class Orchestrator
 
         foreach ($slots as $slot) {
             $extractor = new SlotFillingAgent($slot['extraction_prompt']);
-            $extractor->withChatHistory($this->getChatContextWindow(2));
+            $extractor->withChatHistory($this->chatAgent->getContextWindow(2));
             $extractedValue = $extractor->extract($userInput);
             if ($extractedValue) {
                 $initialData[$slot['slot_name']] = $extractedValue;
@@ -150,19 +150,5 @@ class Orchestrator
             $this->chatAgent->fillChatHistory(new AssistantMessage($question));
             yield $question;
         }
-    }
-
-    private function getChatContextWindow(int $numberOfMessages): InMemoryChatHistory
-    {
-        $messages = $this->chatAgent->resolveChatHistory()->getMessages();
-        $contextWindow = array_slice($messages, -$numberOfMessages);
-
-        $chatHistory = new InMemoryChatHistory();
-
-        foreach ($contextWindow as $message) {
-            $chatHistory->addMessage($message);
-        }
-
-        return $chatHistory;
     }
 }
