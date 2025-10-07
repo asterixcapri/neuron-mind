@@ -9,7 +9,6 @@ use NeuronMind\Agent\SearcherAgent;
 use NeuronMind\Event\ReflectEvent;
 use NeuronMind\Event\SearchEvent;
 use NeuronMind\Logger\SimpleLogger;
-use RuntimeException;
 
 class SearcherNode extends Node
 {
@@ -17,17 +16,11 @@ class SearcherNode extends Node
     {
         SimpleLogger::info('SearcherNode - Starting...');
 
-        $queries = $state->get('queries');
-
-        if (!is_array($queries)) {
-            throw new RuntimeException('Expected queries to be an array');
-        }
-
         if (!$state->has('searchResults')) {
             $state->set('searchResults', []);
         }
 
-        foreach ($queries as $query) {
+        foreach ($event->queries as $query) {
             SimpleLogger::info('SearcherNode - Query: '.$query);
 
             $content = SearcherAgent::make()
@@ -39,6 +32,6 @@ class SearcherNode extends Node
             $state->set('searchResults', array_merge($state->get('searchResults'), [$content]));
         }
 
-        return new ReflectEvent();
+        return new ReflectEvent($state->get('searchResults'));
     }
 }

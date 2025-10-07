@@ -9,7 +9,6 @@ use NeuronAI\Workflow\WorkflowState;
 use NeuronMind\Agent\QueryWriterAgent;
 use NeuronMind\Event\SearchEvent;
 use NeuronMind\Logger\SimpleLogger;
-use RuntimeException;
 
 class QueryWriterNode extends Node
 {
@@ -21,18 +20,10 @@ class QueryWriterNode extends Node
 
         SimpleLogger::info('QueryWriterNode - Question: ', $question, truncate: false);
 
-        $data = QueryWriterAgent::make()
-            ->structured(new UserMessage("Question: {$question}"));
-
-        if (is_null($data) || !isset($data->queries)) {
-            throw new RuntimeException('Failed to decode query generation output.');
-        }
+        $data = QueryWriterAgent::make()->structured(new UserMessage("Question: {$question}"));
 
         SimpleLogger::info('QueryWriterNode - Response: ', $data, truncate: false);
 
-        $state->set('rationale', $data->rationale ?? '');
-        $state->set('queries', $data->queries ?? []);
-
-        return new SearchEvent();
+        return new SearchEvent($data->queries);
     }
 }
