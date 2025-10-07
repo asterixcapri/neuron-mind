@@ -5,6 +5,7 @@ namespace NeuronMind\Agent;
 use NeuronAI\Agent;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\OpenAI\OpenAI;
+use NeuronMind\Dto\QueryWriterDto;
 
 class QueryWriterAgent extends Agent
 {
@@ -53,5 +54,10 @@ class QueryWriterAgent extends Agent
             }
             ```
         INSTRUCTIONS;
+    }
+
+    protected function getOutputClass(): string
+    {
+        return QueryWriterDto::class;
     }
 }

@@ -5,6 +5,7 @@ namespace NeuronMind\Agent;
 use NeuronAI\Agent;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\OpenAI\OpenAI;
+use NeuronMind\Dto\ReflectionDto;
 
 class ReflectionAgent extends Agent
 {
@@ -45,5 +46,10 @@ class ReflectionAgent extends Agent
             "followUpQueries": ["What is a real-world example illustrating the difference between X and Y?"]
             }
         INSTRUCTIONS;
+    }
+
+    protected function getOutputClass(): string
+    {
+        return ReflectionDto::class;
     }
 }

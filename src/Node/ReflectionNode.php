@@ -10,7 +10,6 @@ use NeuronMind\Event\AnswerEvent;
 use NeuronMind\Event\ReflectEvent;
 use NeuronMind\Event\SearchEvent;
 use NeuronMind\Logger\SimpleLogger;
-use NeuronMind\Service\JsonExtractor;
 use RuntimeException;
 
 class ReflectionNode extends Node
@@ -35,11 +34,8 @@ class ReflectionNode extends Node
             implode("\n---\n", $searchResults)
         ));
 
-        $content = ReflectionAgent::make()
-            ->chat($userMessage)
-            ->getContent();
-
-        $data = (new JsonExtractor())->getData($content);
+        $data = ReflectionAgent::make()
+            ->structured($userMessage);
 
         if (is_null($data) || !isset($data->isSufficient)) {
             throw new RuntimeException('Failed to parse reflection response.');
