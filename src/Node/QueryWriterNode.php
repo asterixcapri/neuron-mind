@@ -4,15 +4,17 @@ namespace NeuronMind\Node;
 
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronAI\Workflow\Node;
+use NeuronAI\Workflow\StartEvent;
 use NeuronAI\Workflow\WorkflowState;
 use NeuronMind\Agent\QueryWriterAgent;
+use NeuronMind\Event\SearchEvent;
 use NeuronMind\Logger\SimpleLogger;
 use NeuronMind\Service\JsonExtractor;
 use RuntimeException;
 
 class QueryWriterNode extends Node
 {
-    public function run(WorkflowState $state): WorkflowState
+    public function __invoke(StartEvent $event, WorkflowState $state): SearchEvent
     {
         SimpleLogger::info('QueryWriterNode - Starting...');
 
@@ -35,6 +37,6 @@ class QueryWriterNode extends Node
         $state->set('rationale', $data->rationale ?? '');
         $state->set('queries', $data->queries ?? []);
 
-        return $state;
+        return new SearchEvent();
     }
 }

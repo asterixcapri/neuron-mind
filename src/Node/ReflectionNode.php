@@ -6,13 +6,16 @@ use NeuronAI\Chat\Messages\UserMessage;
 use NeuronAI\Workflow\Node;
 use NeuronAI\Workflow\WorkflowState;
 use NeuronMind\Agent\ReflectionAgent;
+use NeuronMind\Event\AnswerEvent;
+use NeuronMind\Event\ReflectEvent;
+use NeuronMind\Event\SearchEvent;
 use NeuronMind\Logger\SimpleLogger;
 use NeuronMind\Service\JsonExtractor;
 use RuntimeException;
 
 class ReflectionNode extends Node
 {
-    public function run(WorkflowState $state): WorkflowState
+    public function __invoke(ReflectEvent $event, WorkflowState $state): SearchEvent|AnswerEvent
     {
         SimpleLogger::info('ReflectionNode - Starting...');
 
@@ -50,6 +53,12 @@ class ReflectionNode extends Node
         $loopCount = $state->has('loopCount') ? $state->get('loopCount') + 1 : 1;
         $state->set('loopCount', $loopCount);
 
-        return $state;
+        if ($state->get('loopCount') > 3) {
+            return new AnswerEvent();
+        }
+
+        return $state->get('isSufficient')
+            ? new AnswerEvent()
+            : new SearchEvent();
     }
 }

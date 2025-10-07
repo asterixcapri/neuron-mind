@@ -4,14 +4,16 @@ namespace NeuronMind\Node;
 
 use NeuronAI\Chat\Messages\UserMessage;
 use NeuronAI\Workflow\Node;
+use NeuronAI\Workflow\StopEvent;
 use NeuronAI\Workflow\WorkflowState;
 use NeuronMind\Agent\AnswerAgent;
+use NeuronMind\Event\AnswerEvent;
 use NeuronMind\Logger\SimpleLogger;
 use RuntimeException;
 
 class AnswerNode extends Node
 {
-    public function run(WorkflowState $state): WorkflowState
+    public function __invoke(AnswerEvent $event, WorkflowState $state): StopEvent
     {
         SimpleLogger::info('AnswerNode - Starting...');
 
@@ -39,6 +41,6 @@ class AnswerNode extends Node
 
         $state->set('answer', $content);
 
-        return $state;
+        return new StopEvent();
     }
 }

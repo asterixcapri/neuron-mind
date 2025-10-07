@@ -32,11 +32,10 @@ class SearchTool extends Tool
 
     public function __invoke(string $question): string
     {
-        $initialState = new WorkflowState();
-        $initialState->set('question', $question);
+        $initialState = new WorkflowState(['question' => $question]);
 
-        $workflow = new SearchWorkflow();
-        $resultState = $workflow->run($initialState);
+        $workflow = new SearchWorkflow($initialState);
+        $resultState = $workflow->start()->getResult();
 
         return $resultState->get('answer');
     }

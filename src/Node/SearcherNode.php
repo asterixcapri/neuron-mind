@@ -6,16 +6,16 @@ use NeuronAI\Chat\Messages\UserMessage;
 use NeuronAI\Workflow\Node;
 use NeuronAI\Workflow\WorkflowState;
 use NeuronMind\Agent\SearcherAgent;
+use NeuronMind\Event\ReflectEvent;
+use NeuronMind\Event\SearchEvent;
 use NeuronMind\Logger\SimpleLogger;
 use RuntimeException;
 
 class SearcherNode extends Node
 {
-    public function run(WorkflowState $state): WorkflowState
+    public function __invoke(SearchEvent $event, WorkflowState $state): ReflectEvent
     {
         SimpleLogger::info('SearcherNode - Starting...');
-
-        $agent = SearcherAgent::make();
 
         $queries = $state->get('queries');
 
@@ -30,15 +30,15 @@ class SearcherNode extends Node
         foreach ($queries as $query) {
             SimpleLogger::info('SearcherNode - Query: '.$query);
 
-            $userMessage = new UserMessage("Query: {$query}");
-            $response = $agent->chat($userMessage);
-            $content = $response->getContent();
+            $content = SearcherAgent::make()
+                ->chat(new UserMessage("Query: {$query}"))
+                ->getContent();
 
             SimpleLogger::info('SearcherNode - Result: ', $content);
 
             $state->set('searchResults', array_merge($state->get('searchResults'), [$content]));
         }
 
-        return $state;
+        return new ReflectEvent();
     }
 }
