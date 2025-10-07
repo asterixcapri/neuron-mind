@@ -6,6 +6,7 @@ use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\ToolProperty;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Workflow\WorkflowState;
+use NeuronMind\Event\ProgressEvent;
 use NeuronMind\Workflow\SearchWorkflow;
 
 class SearchTool extends Tool
@@ -32,9 +33,22 @@ class SearchTool extends Tool
 
     public function __invoke(string $question): string
     {
-        $result = SearchWorkflow::make(new WorkflowState(['question' => $question]))
-            ->start()
-            ->getResult();
+        $workflow = SearchWorkflow::make(new WorkflowState(['question' => $question]));
+        $handler = $workflow->start();
+
+        foreach ($handler->streamEvents() as $event) {
+            if ($event instanceof ProgressEvent) {
+                echo $event->message;
+
+                if ($event->data) {
+                    echo json_encode($event->data, \JSON_PRETTY_PRINT);
+                }
+
+                echo "\n";
+            }
+        }
+
+        $result = $handler->getResult();
 
         return $result->get('answer');
     }
