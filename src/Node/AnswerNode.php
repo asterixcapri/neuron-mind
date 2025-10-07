@@ -17,8 +17,6 @@ class AnswerNode extends Node
     {
         SimpleLogger::info('AnswerNode - Starting...');
 
-        $agent = AnswerAgent::make();
-
         $question = $state->get('question');
         $searchResults = $state->get('searchResults');
 
@@ -34,8 +32,9 @@ class AnswerNode extends Node
             implode("\n---\n", $searchResults)
         ));
 
-        $response = $agent->chat($userMessage);
-        $content = $response->getContent();
+        $content = AnswerAgent::make()
+            ->chat($userMessage)
+            ->getContent();
 
         SimpleLogger::info('AnswerNode - Response: ', $content);
 

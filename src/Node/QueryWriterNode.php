@@ -18,15 +18,15 @@ class QueryWriterNode extends Node
     {
         SimpleLogger::info('QueryWriterNode - Starting...');
 
-        $agent = QueryWriterAgent::make();
-
         $question = $state->get('question');
 
         SimpleLogger::info('QueryWriterNode - Question: ', $question, truncate: false);
 
-        $userMessage = new UserMessage("Question: {$question}");
-        $response = $agent->chat($userMessage);
-        $data = (new JsonExtractor())->getData($response->getContent());
+        $content = QueryWriterAgent::make()
+            ->chat(new UserMessage("Question: {$question}"))
+            ->getContent();
+
+        $data = (new JsonExtractor())->getData($content);
 
         if (is_null($data) || !isset($data->queries)) {
             throw new RuntimeException('Failed to decode query generation output.');
