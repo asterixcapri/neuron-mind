@@ -1,3 +1,5 @@
+
+
 # 🧠 NeuronMind
 
 **NeuronMind** is a fully working example that demonstrates how to build an **agentic AI assistant in PHP**, powered by [Neuron-AI](https://github.com/inspector-apm/neuron-ai), the open-source PHP framework for building LLM-based agents.
@@ -60,7 +62,7 @@ When a user asks a question, the system first hands it to the **QueryWriter**, w
 
 ## ⚙️ Requirements
 
-- PHP 8.2+
+- PHP 8.4+
 - Composer
 - OpenAI API key
 - Jina API key (for search)
